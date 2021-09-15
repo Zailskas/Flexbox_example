@@ -18,11 +18,29 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      firstname: ''
+      firstnameValue: '',
+      lastnameValue: '',
+      firstname: '',
+      lastname: '',
     }
   }
   insertValues = () => {
-    console.log(this.state.firstname)
+    this.setState({
+      firstname: this.state.firstnameValue,
+      lastname: this.state.lastnameValue,
+    })
+    this.setState({
+      firstnameValue: '',
+      lastnameValue: '',
+    })
+  }
+  inputChangeFirstname(firstnameValue) {
+    console.log('Input firstname: ', firstnameValue);
+    this.setState({firstnameValue})
+  }
+  inputChangeLastname(lastnameValue) {
+    console.log('Input lastname: ', lastnameValue);
+    this.setState({lastnameValue})
   }
   render() {
     return (
@@ -31,17 +49,26 @@ class App extends Component {
         <View style={[styles.box, {borderBottomColor: 'black', borderBottomWidth: 2}]}>
           <Text>Test</Text>
           <TextInput
-            style={{height: 30, borderColor: 'green', borderWidth: 1 }}
+            style={{height: 40, borderColor: 'green', borderWidth: 1 }}
             placeholder="Firstname"
-            onChangeText = {(firstname) => this.setState({firstname})}
+            value={this.state.firstnameValue}
+            onChangeText = {(firstname) => this.inputChangeFirstname(firstname)}
+          />
+          <TextInput
+            style={{height: 40, borderColor: 'green', borderWidth: 1 }}
+            placeholder="Lastname"
+            value={this.state.lastnameValue}
+            onChangeText = {(lastname) => this.inputChangeLastname(lastname)}
           />
           <Button
             title='Insert'
             style={{padding: 10}}
+            onPress={this.insertValues}
           />
         </View>
         <View style={styles.box}>
           <Text>{this.state.firstname}</Text>
+          <Text>{this.state.lastname}</Text>
         </View>
       </View>
       </SafeAreaView>
