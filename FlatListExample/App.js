@@ -11,9 +11,24 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput, Button, SafeAreaView
+  TextInput, Button, SafeAreaView, FlatList
 } from 'react-native';
+import uuid from 'react-native-uuid';
 
+const carData = [
+  {
+    "id": 1,
+  "make": "BMW",
+  "model": "M3",
+  "price": "80000"
+  },
+  {
+    "id": 2,
+  "make": "MERSEDES BENZ",
+  "model": "C350",
+  "price": "50000"
+  }
+]
 class App extends Component {
   constructor(props){
     super(props)
@@ -22,17 +37,20 @@ class App extends Component {
       lastnameValue: '',
       firstname: '',
       lastname: '',
+      users: []
     }
   }
   insertValues = () => {
-    this.setState({
+    const user = {
       firstname: this.state.firstnameValue,
-      lastname: this.state.lastnameValue,
-    })
-    this.setState({
-      firstnameValue: '',
-      lastnameValue: '',
-    })
+      lastname: this.state.lastnameValue, 
+      userIndex: uuid.v4(),      
+    }
+    const users = [...this.state.users, user]
+    this.setState({ users, firstnameValue: '', lastnameValue: '' }, ()=>{
+      console.log(this.state.users[0])
+    }
+    )
   }
   inputChangeFirstname(firstnameValue) {
     console.log('Input firstname: ', firstnameValue);
@@ -70,6 +88,28 @@ class App extends Component {
           <Text>{this.state.firstname}</Text>
           <Text>{this.state.lastname}</Text>
         </View>
+        <FlatList 
+          keyExtractor={(users) => users.userIndex}
+          data={this.state.users}
+          renderItem={({item}) => {
+            return (
+              <View style={styles.carBox}>
+                <Text>{item.firstname} {item.lastname}</Text>
+              </View>
+            )
+          }}
+        />
+        <FlatList 
+          keyExtractor={(carData) => carData.id}
+          data={carData}
+          renderItem={({item}) => {
+            return (
+              <View style={styles.carBox}>
+                <Text>{item.make} modelio {item.model} kaina {item.price}</Text>
+              </View>
+            )
+          }}
+        />
       </View>
       </SafeAreaView>
       
@@ -86,6 +126,12 @@ const styles = StyleSheet.create({
   box: {
     padding: 20,
     alignItems: 'center'
+  },
+  carBox: {
+    margin: 1,
+    alignItems: 'center', 
+    borderWidth: 1,
+    backgroundColor: "beige"
   }
 });
 
