@@ -11,8 +11,9 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput, Button, SafeAreaView, FlatList
+  TextInput, SafeAreaView, FlatList
 } from 'react-native';
+import {Button, ListItem} from 'react-native-elements'
 import uuid from 'react-native-uuid';
 
 const carData = [
@@ -67,7 +68,7 @@ class App extends Component {
         <View style={[styles.box, {borderBottomColor: 'black', borderBottomWidth: 2}]}>
           <Text>Test</Text>
           <TextInput
-            style={{height: 40, borderColor: 'green', borderWidth: 1 }}
+            style={{height: 40, width:30, borderColor: 'green', borderWidth: 1 }}
             placeholder="Firstname"
             value={this.state.firstnameValue}
             onChangeText = {(firstname) => this.inputChangeFirstname(firstname)}
@@ -80,13 +81,15 @@ class App extends Component {
           />
           <Button
             title='Insert'
+            type='outline'
             style={{padding: 10}}
             onPress={this.insertValues}
           />
+          <Button title="Hey!" />
         </View>
         <View style={styles.box}>
-          <Text>{this.state.firstname}</Text>
-          <Text>{this.state.lastname}</Text>
+          <Text>{this.state.firstnameValue}</Text>
+          <Text>{this.state.lastnameValue}</Text>
         </View>
         <FlatList 
           keyExtractor={(users) => users.userIndex}
@@ -110,6 +113,16 @@ class App extends Component {
             )
           }}
         />
+        {
+          carData.map((item, i) => (
+            <ListItem key={i} bottomDivider>
+              <ListItem.Content>
+              <ListItem.Title>{item.make}</ListItem.Title>
+              </ListItem.Content>
+              <ListItem.Chevron />
+            </ListItem>
+          ))
+        }
       </View>
       </SafeAreaView>
       

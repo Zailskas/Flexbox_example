@@ -3,7 +3,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '11.0'
 
-target 'FlatListExample' do
+target 'Navigation_between_screens' do
   config = use_native_modules!
 
   use_react_native!(
@@ -12,9 +12,7 @@ target 'FlatListExample' do
     :hermes_enabled => false
   )
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-
-  target 'FlatListExampleTests' do
+  target 'Navigation_between_screensTests' do
     inherit! :complete
     # Pods for testing
   end
