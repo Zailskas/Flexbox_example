@@ -28,7 +28,6 @@ class firstTabPage extends Component {
     }
 
     inputChangeName(value) {
-        console.log(value)
         this.setState({
             name: value
         })
@@ -44,6 +43,7 @@ class firstTabPage extends Component {
         } else {
             try {
                 await AsyncStorage.setItem('Username', this.state.name);
+                console.log(this.state.name)
             } catch (error) {
                 console.log(error)
             }
@@ -73,6 +73,14 @@ class firstTabPage extends Component {
             // error reading value
         }
     }
+    removeData = async () => {
+        try {
+            await AsyncStorage.removeItem('Username');
+            console.log('OK');
+        } catch (e) {
+            console.log('neveikia');
+        }
+    }
     getObject = async () => {
         try {
             const jsonValue = await AsyncStorage.getItem('Object')
@@ -95,11 +103,14 @@ class firstTabPage extends Component {
                     <TextInput placeholder="Insert favorite team" style={styles.textIinput}
                         onChangeText={(value) => this.inputChangeTeamName(value)}
                     />
-                    <TouchableOpacity style={styles.buttonStyle} onPress={this.saveObject}>
+                    <TouchableOpacity style={styles.buttonStyle} onPress={this.saveData}>
                         <Text>INSERT</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonStyle} onPress={this.getObject}>
+                    <TouchableOpacity style={styles.buttonStyle} onPress={this.getData}>
                         <Text>SHOW</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonStyle} onPress={this.removeData}>
+                        <Text>DELETE</Text>
                     </TouchableOpacity>
                 </View>
             </SafeAreaView>

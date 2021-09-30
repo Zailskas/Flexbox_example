@@ -46,7 +46,7 @@ class secondTabPage extends Component {
         const jsonValue = await AsyncStorage.getItem('Object')
         const value = JSON.parse(jsonValue);
         console.log(value.name);
-        this.state({
+        this.setState({
           name: value.name,
           teamname: value.teamname
         })
@@ -56,7 +56,7 @@ class secondTabPage extends Component {
     }
 }
   componentDidMount() {
-    this.getData();
+    this.getObject();
   }
 
   render() {
