@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, FlatList, Image} from 'react-native';
+import {View, Text, StyleSheet, FlatList, Image, ScrollView} from 'react-native';
 
 class tourPhotos extends Component {
   render() {

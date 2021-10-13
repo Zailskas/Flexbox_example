@@ -6,16 +6,40 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import mainMenu from './src/mainMenu';
 import tourList from './src/tourList';
 import tourPhotos from './src/tourPhotos';
-import tabMenu from './src/tabMenu';
+import tabList from './src/tabList';
+import axios from 'axios';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 class TabHome extends Component {
+  constructor() {
+    super();
+    this.state = {
+      data: [],
+    };
+  }
+  componentDidMount = () => {
+    axios
+      .get('https://my-json-server.typicode.com/Zailskas/driftSeasonAPI/season')
+      .then((res) => {
+        const Data = res.data;
+        this.setState({
+          data: Data,
+        });
+      });
+  };
   render() {
+    const page = this.state.data.map(item => {
+      return (
+        <Tab.Screen name={item.tour} component={tabList} key={item.tourID} />
+      )
+    })
+    if(this.state.data.length===0)
+       return null;
     return (
       <Tab.Navigator>
-        <Tab.Screen name="Tour" component={tabMenu}/>
+        {page}
       </Tab.Navigator>
     )
   }
