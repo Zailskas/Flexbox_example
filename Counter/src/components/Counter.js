@@ -27,6 +27,7 @@ class Counter extends Component {
                     </TouchableOpacity>
                 </View>
                 <Text style={{...styles.addButtonText, marginLeft: 40}}>{this.props.value.value}</Text>
+                <Text style={{...styles.addButtonText, marginLeft: 40}}>{this.props.value.text}</Text>
                 <View style={{margin: 20}}>
                     <TouchableOpacity onPress={() => this.decrease()}>
                         <View style={styles.addButton}>
