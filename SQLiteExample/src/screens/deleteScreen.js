@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {connect} from 'react-redux';
-import {showAll, deleteCar} from '../../store/actions/carAction';
+import {showAll, removeCar} from '../../store/actions/carAction';
 
 class deleteScreen extends Component {
   componentDidMount() {
@@ -23,11 +23,11 @@ class deleteScreen extends Component {
             <View style={styles.cars} key={index}>
               <View style={{flex: 1, justifyContent: 'center'}}>
                 <Text style={styles.make}>
-                  {car.make} {car.model}
+                  {car.Make} {car.Model}
                 </Text>
               </View>
               <View style={styles.deleteButton}>
-                <TouchableOpacity onPress={() => this.props.deleteCar(car.id)}>
+                <TouchableOpacity onPress={() => this.props.removeCar(car.ID)}>
                   <View style={styles.addButtonContainer}>
                     <Text style={styles.addButton}>DELETE</Text>
                   </View>
@@ -90,4 +90,4 @@ const mapStateToProps = (state) => {
     cars: state.cars,
   };
 };
-export default connect(mapStateToProps, {showAll, deleteCar})(deleteScreen);
+export default connect(mapStateToProps, {showAll, removeCar})(deleteScreen);

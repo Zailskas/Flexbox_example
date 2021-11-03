@@ -17,7 +17,7 @@ class showScreen extends Component {
           {cars.cars.map((car, index) =>
             <View style={styles.cars} key={index}>
               <Text style={styles.make}>
-                {car.make} {car.model}
+                {car.Make} {car.Model}
 
               </Text>
             </View>

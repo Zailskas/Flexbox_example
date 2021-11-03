@@ -35,8 +35,6 @@ export const insertCar = (make, model) => {
         'INSERT INTO Car (Make, Model) VALUES (?, ?);',
         [make, model],
         (tx, result) => {
-          console.log('tx', tx);
-          console.log('result', result);
           resolve(result);
         },
         (tx, err) => {
@@ -56,8 +54,6 @@ export const createRecord = () => {
         'INSERT INTO Car (Make, Model) VALUES (?, ?);',
         [make, model],
         (tx, result) => {
-          console.log('tx', tx);
-          console.log('result', result);
           resolve(result);
         },
         (tx, err) => {
@@ -66,3 +62,36 @@ export const createRecord = () => {
       );
     });
 };
+
+export const fetchCars = () => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT * FROM Car', [], (tx, result) => {
+          resolve(result);
+        },
+        (tx, err) => {
+          reject(err);
+        }
+      );
+    });
+  });
+  return promise
+}
+
+export const deleteCar = (id) => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'DELETE FROM Car WHERE id=?', [id], (tx, result) => {
+          console.log(result)
+          resolve(result);
+        },
+        (tx, err) => {
+          reject(err);
+        }
+      );
+    });
+  });
+  return promise
+}
