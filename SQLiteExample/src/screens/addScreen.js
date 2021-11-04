@@ -31,7 +31,6 @@ class addScreen extends Component {
     createRecord();
   }
   componentDidMount() {
-    createTable();
   }
 
   render() {
