@@ -1,17 +1,25 @@
-import {createUser} from '../../src/helper/db';
+import {checkUser, createUser} from '../../src/helper/db';
 
-export const addUser = (ID, username, email, password) => {
+export const addUser = (ID, username, email, password, callback) => {
     return async (dispatch) => {
       try {
-        const dbResult = await createUser(ID, username, email, password);
+        const dbResult = await checkUser(ID, username, email, password);
         console.log(dbResult);
-        dispatch({
-          type: 'CREATE_USER',
-          payload: {ID: ID, Username: username, Email: email, Password: password},
-        });
+        if(dbResult === 'alert'){
+          dispatch({type: 'ALERT_TEXT', payload: 'User exist'});
+        } else if (dbResult === 'newUser'){
+          const dbResult_ = await createUser(ID, username, email, password);
+          console.log(dbResult_);
+          dispatch({
+            type: 'CREATE_USER',
+            payload: {ID: ID, Username: username, Email: email, Password: password},
+          });
+          dispatch({type: 'ALERT_TEXT', payload: 'Registration success'});
+        }
       } catch (err) {
         console.log(err);
         throw err;
       }
+      callback();
     };
   };

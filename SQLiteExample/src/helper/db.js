@@ -1,3 +1,4 @@
+import { RecyclerViewBackedScrollViewBase } from 'react-native';
 import SQLite from 'react-native-sqlite-storage';
 
 
@@ -92,6 +93,7 @@ export const fetchCars = () => {
       tx.executeSql(
         'SELECT * FROM Car', [], (tx, result) => {
           resolve(result);
+          console.log(result);
         },
         (tx, err) => {
           reject(err);
@@ -118,22 +120,23 @@ export const deleteCar = (id) => {
   });
   return promise
 }
-
-export const createUser = (ID, username, email, password) => {
+//'INSERT INTO User (ID, Username, Email, Password) VALUES (?, ?, ?, ?);',
+  //      [ID, username, email, password],
+export const checkUser = (ID, username, email, password) => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        'INSERT INTO User (ID, Username, Email, Password) VALUES (?, ?, ?, ?);',
-        [ID, username, email, password],
+        'SELECT username FROM User WHERE username=?', [username],
         (tx, result) => {
-          resolve(result);
-          console.log(ID, username, email, password)
+          if(result.rows.length > 0){ 
+            console.log('Yra useris');
+            resolve('alert');
+          } else {
+            resolve('newUser')
+          } 
         },
         (tx, err) => {
-          console.log(ID, username, email, password)
-          console.log(tx)
           console.log('Kazkas ne taip');
-          console.log(err)
           reject(err);
         },
       );
@@ -141,3 +144,40 @@ export const createUser = (ID, username, email, password) => {
   })
   return promise;
 };
+
+export const createUser = (ID, username, email, password) => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx_) => {
+      tx_.executeSql(
+        'INSERT INTO User (ID, Username, Email, Password) VALUES (?,?,?,?);',
+        [ID, username, email, password],
+        (_, result) => {
+          resolve(result);
+          console.log('Ivesta')
+        }, 
+        (_, err) => {
+          console.log('Neivesta');
+          reject(err);
+        }
+      )
+    })
+  })
+  return promise;
+};
+
+/*
+db.transaction((tx_) => {
+              tx_.executeSql(
+                'INSERT INTO User (ID, Username, Email, Password VALUES (?,?,?,?);',
+                [ID, username, email, password],
+                (_, result) => {
+                  resolve(result);
+                  console.log('Ivesta')
+                }, 
+                (_, err) => {
+                  console.log('Neivesta');
+                  reject(err);
+                }
+              )
+            })
+*/

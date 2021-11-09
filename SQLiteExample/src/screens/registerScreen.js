@@ -88,9 +88,21 @@ handleSubmit = () => {
       uuid.v4(),
       this.state.username,
       this.state.email,
-      this.state.password
+      this.state.password, 
+      () => {
+        if (this.props.user.alert === 'Registration success') {
+          Alert.alert(this.props.user.alert,'',
+            [{
+              text: "OK",
+              onPress: () => this.props.navigation.navigate('Login_page')
+            }] 
+          );
+        } else {
+          Alert.alert(this.props.user.alert)
+        }
+      }
     );
-    Alert.alert('Succees')
+    
   }
 }
   render() {
@@ -199,7 +211,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    user: state.users
+    user: state.user
   }
 }
 

@@ -1,5 +1,6 @@
 const initialState = {
     user: [],
+    alert: null,
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -9,11 +10,18 @@ export const userReducer = (state = initialState, action) => {
                 ID: action.payload.ID,
                 Username: action.payload.Username,
                 Email: action.payload.Email,
-                Password: action.payload.Password
+                Password: action.payload.Password,
             }
             console.log(newUser);
             return {
-                state,
+                ...state,
+                user: newUser
+            }
+        case 'ALERT_TEXT': 
+            console.log(action.payload)
+            return {
+                ...state,
+                alert: action.payload
             }
         default: 
             return state;
