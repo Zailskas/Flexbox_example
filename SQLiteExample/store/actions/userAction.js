@@ -1,4 +1,4 @@
-import {checkUser, createUser} from '../../src/helper/db';
+import {checkUser, createUser, userLogin} from '../../src/helper/db';
 
 export const addUser = (ID, username, email, password, callback) => {
     return async (dispatch) => {
@@ -21,5 +21,30 @@ export const addUser = (ID, username, email, password, callback) => {
         throw err;
       }
       callback();
+    };
+  };
+
+  export const loginUser = (username, password, callback) => {
+    return async (dispatch) => {
+      try {
+        const dbResult = await userLogin(username, password);
+        console.log(dbResult.rows.length);
+        if (dbResult.rows.length > 0) {
+          dispatch({
+            type: 'LOGIN_SUCCESS',
+            payload: true,
+          });
+        } else {
+          console.log('Blogi duomenys');
+          dispatch({
+            type: 'LOGIN_SUCCESS',
+            payload: false,
+          });
+        }
+        callback();
+      } catch (err) {
+        console.log('Klaida');
+        throw err;
+      }
     };
   };

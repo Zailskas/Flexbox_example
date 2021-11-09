@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Alert, StyleSheet, TextInput, SafeAreaView} from 'react-native';
+import {View, Text, Alert, StyleSheet, TextInput, SafeAreaView, TouchableOpacity} from 'react-native';
 import CustomButton from '../components/customButton';
 import {connect} from 'react-redux';
 import {addUser} from '../../store/actions/userAction';
@@ -181,6 +181,10 @@ handleSubmit = () => {
           onPress={this.handleSubmit}
           disabled={false}
         />
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Login_page')}>
+          <Text>Already have an account? Sign in !!!</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     );
   }

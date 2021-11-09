@@ -165,6 +165,24 @@ export const createUser = (ID, username, email, password) => {
   return promise;
 };
 
+export const userLogin = (username, password) => {
+  const promise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT ID, username, password FROM User WHERE username = ? and password = ?;',
+        [username, password],
+        (_, result) => {
+          resolve(result);
+        },
+        (_, err) => {
+          reject(err);
+        },
+      );
+    });
+  });
+  return promise;
+};
+
 /*
 db.transaction((tx_) => {
               tx_.executeSql(
