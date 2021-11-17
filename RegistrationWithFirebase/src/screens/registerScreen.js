@@ -87,7 +87,8 @@ class RegistrationPage extends Component {
     auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(() => {
-        console.log('Sign in');
+        console.log('Sign up');
+        this.props.navigation.navigate('Login_page');
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
