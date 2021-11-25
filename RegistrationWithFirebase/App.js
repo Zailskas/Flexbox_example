@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -16,11 +16,21 @@ import addScreen from './src/screens/addScreen';
 import deleteScreen from './src/screens/deleteScreen';
 import loginScreen from './src/screens/loginScreen';
 import registerScreen from './src/screens/registerScreen';
+import auth from '@react-native-firebase/auth';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const PrivateContainer = () => {
+  const signOut = () => {
+    auth()
+      .signOut()
+      .then(() => {
+        console.log('Sign out')
+        navigation.navigate('Login_page');
+      }
+      )
+  }
   return (
     <Tab.Navigator
       initialRoute="SHOW"
@@ -31,6 +41,12 @@ const PrivateContainer = () => {
         component={showScreen}
         options={{
           tabBarLabel: 'SHOW',
+          headerRight: () => (
+            <Button
+              onPress={() => signOut()}
+              title="Sign out"
+            />
+          ),
         }}
       />
       <Tab.Screen

@@ -10,6 +10,7 @@ class LoginPage extends Component {
     this.state = {
       username: '',
       password: '',
+      user: auth().currentUser
     };
   }
   usernameChange(username) {
@@ -19,9 +20,15 @@ class LoginPage extends Component {
     this.setState({ password });
   }
   handleSubmit = () => {
-
+    console.log(this.state.user)
     //if (this.props.message)
   };
+  signOut = () => {
+    auth()
+      .signOut() 
+      .then(() => console.log('Sign out'))
+
+  }
   handleSignIn = () => {
     auth()
       .signInWithEmailAndPassword(this.state.username, this.state.password)
@@ -41,7 +48,15 @@ class LoginPage extends Component {
         }
       })
   }
-
+  componentDidMount () {
+    if (auth().currentUser !== null){
+      this.props.navigation.navigate('PrivatePage')
+    }
+    else {
+      this.props.navigation.navigate('Login_page')
+    }
+    console.log(auth().currentUser)
+  }
   //this.props.navigation.navigate('PrivatePage')
 
   render() {
@@ -61,6 +76,8 @@ class LoginPage extends Component {
           secureTextEntry={true}
         />
         <CustomButton title="Login" onPress={this.handleSignIn} />
+        <CustomButton title="test" onPress={this.handleSubmit} />
+        <CustomButton title="signOut" onPress={this.signOut} />
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Register_page')}>
           <Text>No account? Create one !!!</Text>
