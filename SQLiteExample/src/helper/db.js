@@ -4,9 +4,9 @@ import SQLite from 'react-native-sqlite-storage';
 
 export const db = SQLite.openDatabase(
   {
-    name: 'Garage',
+    name: 'Test.db',
     location: 'default',
-    createFromLocation: '~Garage.db',
+    createFromLocation: '~Test.db',
   },
   () => {
     console.log('OK veikia');
